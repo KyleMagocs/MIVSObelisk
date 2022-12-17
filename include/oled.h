@@ -69,7 +69,7 @@ static void drawTimers(int timer, elapsedSeconds uptime)
     short hr = tempUptime / 60 / 60;
     min = (tempUptime  % 3600) / 60;
     sec = (tempUptime  % 3600) % 60;
-    sprintf(timestr2, "%3dh%2dm%2ds", hr, min, sec);
+    sprintf(timestr2, "%3dh%2dm", hr, min);
     u8x8.drawString(17-(sizeof(timestr2)/sizeof(char)), 7, timestr2);
 }
 
