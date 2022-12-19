@@ -40,21 +40,24 @@ void loop()
         patternTimer = 0;
         writePattern = true;
     }
-    if (oledTimer > OLED_DRAW)
-    {
-        oledTimer = 0;
-        draw_base();
-        logPalette(getCurrentPaletteName());
-        drawTimers(PATTERN_SWAP - patternTimer, uptime);  // and update the oled  
-        show_oled();  
-    }
 
+    draw_base();
+    logPalette(getCurrentPaletteName());
+    drawTimers(PATTERN_SWAP - patternTimer, uptime);  // and update the oled  
 
     allPatterns[patternIndex](startIndex);
 
     FastLED.show();
+    
+    if (oledTimer > OLED_DRAW)
+    {
+        show_oled();  
+        oledTimer = 0;
+    }
 
     FastLED.delay(1000 / UPDATES_PER_SECOND);
    
+
+
     startIndex++; /* motion speed */ 
 }

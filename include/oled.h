@@ -41,7 +41,7 @@ void logPalette(String paletteName) {
     Heltec.display->drawString(0, 48, paletteName);
 }
 
-static void updatePattern(char pattern[]){
+void updatePattern(String pattern){
     // Heltec.display->setInverseFont(0);
     Heltec.display->drawString(0, 24, pattern);
 }

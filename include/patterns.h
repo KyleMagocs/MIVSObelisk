@@ -8,13 +8,7 @@
 #include "oled.h"
 #include "strips.h"
 
-
-
 short patternIndex;
-
-
-
-
 
 void FillAllStripsUniform( uint8_t colorIndex)
 {
