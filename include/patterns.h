@@ -18,7 +18,7 @@ short patternIndex;
 
 void FillAllStripsUniform( uint8_t colorIndex)
 {
-    tryWritePattern("uniform");
+    updatePattern("uniform");
 
     for( int i = 0; i < NUM_LEDS; i++) {
         leds1[i] = ColorFromPalette( getCurrentPalette(), colorIndex, BRIGHTNESS, currentBlending);
@@ -30,7 +30,7 @@ void FillAllStripsUniform( uint8_t colorIndex)
 
 void FillAllStripsCycle( uint8_t colorIndex)
 {
-    tryWritePattern("cycle");
+    updatePattern("cycle");
     for( int i = 0; i < NUM_LEDS; i++) {
         leds1[i] = ColorFromPalette( getCurrentPalette(), colorIndex, BRIGHTNESS, currentBlending);
         leds2[i] = ColorFromPalette( getCurrentPalette(), colorIndex, BRIGHTNESS, currentBlending);
@@ -42,7 +42,7 @@ void FillAllStripsCycle( uint8_t colorIndex)
 
 void FillEachCube( uint8_t colorIndex)
 {
-    tryWritePattern("cubes");
+    updatePattern("cubes");
   for(int i = 0; i < 4; i++){  // each box
     for(int j = 0; j < LEDS_PER_STRIP; j++)  // each LED in the box
     {
@@ -56,7 +56,7 @@ void FillEachCube( uint8_t colorIndex)
 
 void FillEachPillar( uint8_t colorIndex)
 {
-    tryWritePattern("pillars");
+    updatePattern("pillars");
     for( int i = 0; i < NUM_LEDS; i++) {
         leds1[i] = ColorFromPalette( getCurrentPalette(), colorIndex, BRIGHTNESS, currentBlending);
     }

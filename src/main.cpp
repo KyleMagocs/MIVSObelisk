@@ -40,13 +40,14 @@ void loop()
         randomizePattern();
         patternTimer = 0;
         writePattern = true;
-
-        logPalette(paletteIndex);
     }
     if (oledTimer > OLED_DRAW)
     {
         oledTimer = 0;
-        drawTimers(PATTERN_SWAP - patternTimer, uptime);  // and update the oled    
+        draw_base();
+        logPalette(paletteIndex);
+        drawTimers(PATTERN_SWAP - patternTimer, uptime);  // and update the oled  
+        show_oled();  
     }
 
 

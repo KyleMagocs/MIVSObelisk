@@ -200,7 +200,7 @@ void Fire2012WithPalette_4()
 }
 
 void FireNormal(uint8_t colorIndex){
-    tryWritePattern("fire");
+    updatePattern("fire");
 
     gPal = HeatColors_p;
     Fire2012WithPalette_1();
@@ -210,7 +210,7 @@ void FireNormal(uint8_t colorIndex){
 }
 void FireCool(uint8_t colorIndex)
 {
-    tryWritePattern("bluecandle");
+    updatePattern("bluecandle");
 
     // Second, this palette is like the heat colors, but blue/aqua instead of red/yellow
     gPal = CRGBPalette16(CRGB::Black, CRGB::Blue, CRGB::Aqua, CRGB::White);

@@ -1,65 +1,65 @@
 #ifndef oled_h
 #define oled_h
 
-#include <U8x8lib.h>
 #include <SPI.h>
 #include <SD.h>
 #include <elapsedMillis.h>
-
+#include "heltec.h"
 #include "constants.h"
 
 
-
-// the OLED used
-U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8(/* clock=*/ 15, /* data=*/ 4, /* reset=*/ 16);
 
 bool writePattern = true;
 
 void init_oled()
 {
+    Heltec.begin(true /*DisplayEnable Enable*/, false /*LoRa Enable*/, true /*Serial Enable*/);
+    Heltec.display->setFont(ArialMT_Plain_10);
+}
+
+void draw_base() {
     char header2[] = "PATTERN";
     char header3[] = "NEXT";
     char header5[] = "UPTIME";
     char header6[] = "PALETTE";
 
+    Heltec.display -> clear();
+    // Heltec.display->
+    // Heltec.display->setInverseFont(1);
+    Heltec.display->drawString(128-(sizeof(VERSIONSTRING)/sizeof(char))*6, 0 , VERSIONSTRING);
+    Heltec.display->drawString(0, 16, header2);
+    Heltec.display->drawString(128-(sizeof(header3)/sizeof(char))*6, 16 , header3);
+    Heltec.display->drawString(128-(sizeof(header5)/sizeof(char))*6, 40 , header5);
+    Heltec.display->drawString(0, 40, header6);
 
-    u8x8.begin();
-    u8x8.setFont(u8x8_font_chroma48medium8_r);
-    u8x8.setInverseFont(1);
-    u8x8.drawString(17-(sizeof(VERSIONSTRING)/sizeof(char)), 0 , VERSIONSTRING);
-    u8x8.drawString(0, 3, header2);
-    u8x8.drawString(17-(sizeof(header3)/sizeof(char)), 3 , header3);
-    u8x8.drawString(17-(sizeof(header5)/sizeof(char)), 6 , header5);
-    u8x8.drawString(0, 6, header6);
-
-    u8x8.setInverseFont(0);
+    // Heltec.display->setInverseFont(0);
     char header4[] = "by socks!";
-    u8x8.drawString(17-(sizeof(header4)/sizeof(char)), 1 , header4);
+    Heltec.display->drawString(128-(sizeof(header4)/sizeof(char))*8, 8 , header4);
 }
 
 void logPalette(int paletteIndex) { 
     char tmp[5];
     sprintf(tmp, "%d", paletteIndex);
-    u8x8.drawString(0, 7, tmp);
+    Heltec.display->drawString(0, 48, tmp);
+    Heltec.display -> display();
 }
 
-
-
 static void updatePattern(char pattern[]){
-    u8x8.setInverseFont(0);
-    u8x8.drawString(0, 4, pattern);
+    // Heltec.display->setInverseFont(0);
+    Heltec.display->drawString(0, 24, pattern);
+    Heltec.display -> display();
 }
 
 static void drawTimers(int timer, elapsedSeconds uptime)
 {
-    u8x8.setInverseFont(0);
+    // Heltec.display->setInverseFont(0);
 
     // timer for next pattern
     char timestr[8];
     short min = timer / 60;
     short sec = timer % 60;
     sprintf(timestr, "%2dm %2ds", min, sec);
-    u8x8.drawString(17-(sizeof(timestr)/sizeof(char)), 4, timestr);
+    Heltec.display->drawString(128-5*8, 24, timestr);
 
 
     // uptime
@@ -70,17 +70,12 @@ static void drawTimers(int timer, elapsedSeconds uptime)
     min = (tempUptime  % 3600) / 60;
     sec = (tempUptime  % 3600) % 60;
     sprintf(timestr2, "%3dh%2dm", hr, min);
-    u8x8.drawString(17-(sizeof(timestr2)/sizeof(char)), 7, timestr2);
+    Heltec.display->drawString(128-5*8, 48, timestr2);
+    Heltec.display -> display();
 }
 
-void tryWritePattern(char patternName[]){
-    if ( writePattern){
-        updatePattern("         ");
-        updatePattern(patternName);
-        writePattern = false;
-    }
+void show_oled(){
+    Heltec.display -> display();
 }
-
-
 
 #endif
