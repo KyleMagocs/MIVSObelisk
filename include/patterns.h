@@ -1,7 +1,7 @@
 #ifndef patterns_h
 #define patterns_h
 
-#include "palette.h"
+#include "palette_objects.h"
 #include "constants.h"
 #include "fire.h"
 #include "ocean.h"

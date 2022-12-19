@@ -2,9 +2,8 @@
 #include <elapsedMillis.h>
 #include "constants.h"
 #include "patterns.h"
-#include "patterns.h"
 #include "oled.h"
-
+#include "palette_objects.h"
 
 elapsedSeconds oledTimer;
 elapsedSeconds patternTimer = PATTERN_SWAP *  2; // start it high so we start with a refresh
@@ -45,7 +44,7 @@ void loop()
     {
         oledTimer = 0;
         draw_base();
-        logPalette(paletteIndex);
+        logPalette(getCurrentPaletteName());
         drawTimers(PATTERN_SWAP - patternTimer, uptime);  // and update the oled  
         show_oled();  
     }

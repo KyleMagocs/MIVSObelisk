@@ -37,17 +37,13 @@ void draw_base() {
     Heltec.display->drawString(128-(sizeof(header4)/sizeof(char))*8, 8 , header4);
 }
 
-void logPalette(int paletteIndex) { 
-    char tmp[5];
-    sprintf(tmp, "%d", paletteIndex);
-    Heltec.display->drawString(0, 48, tmp);
-    Heltec.display -> display();
+void logPalette(String paletteName) { 
+    Heltec.display->drawString(0, 48, paletteName);
 }
 
 static void updatePattern(char pattern[]){
     // Heltec.display->setInverseFont(0);
     Heltec.display->drawString(0, 24, pattern);
-    Heltec.display -> display();
 }
 
 static void drawTimers(int timer, elapsedSeconds uptime)
@@ -71,7 +67,6 @@ static void drawTimers(int timer, elapsedSeconds uptime)
     sec = (tempUptime  % 3600) % 60;
     sprintf(timestr2, "%3dh%2dm", hr, min);
     Heltec.display->drawString(128-5*8, 48, timestr2);
-    Heltec.display -> display();
 }
 
 void show_oled(){

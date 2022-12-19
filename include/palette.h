@@ -3,8 +3,6 @@
 
 #include <FastLED.h>
 
-CRGBPalette16 currentPalette = Rainbow_gp;
-int paletteIndex = 0;
 
 #pragma region palettes
 CRGB purple = CHSV(HUE_PURPLE, 255, 255);
@@ -150,32 +148,28 @@ DEFINE_GRADIENT_PALETTE( hangonfatboy_gp ) {
   224,  74, 22, 53,
   255, 215, 74,  6};
 
+// Gradient palette "ryb_gp", originally from
+// http://soliton.vm.bytemark.co.uk/pub/cpt-city/grass/tn/ryb.png.index.html
+// converted for FastLED with gammas (2.6, 2.2, 2.5)
+// Size: 12 bytes of program space.
 
-CRGBPalette16 allPalettes[] = {
-    Dark2_06_gp,
-    bhw2_50_gp,
-    GMT_seis_gp,
-    ramp_gp,
-    cool_gp,
-    yarg_gp,
-    hangonfatboy_gp,
-    // WhiteStripes_p // ack it just looks like ass because I'm not injecting better power
-    winter_gp
-};
+DEFINE_GRADIENT_PALETTE( ryb_gp ) {
+    0, 255,  0,  0,
+  127, 255,255,  0,
+  255,   0,  0,255};
 
-int numPalettes = sizeof(allPalettes) / sizeof(CRGBPalette16);
-#pragma endregion
+// Gradient palette "aspectcolr_gp", originally from
+// http://soliton.vm.bytemark.co.uk/pub/cpt-city/grass/tn/aspectcolr.png.index.html
+// converted for FastLED with gammas (2.6, 2.2, 2.5)
+// Size: 24 bytes of program space.
 
-CRGBPalette16 getCurrentPalette(){
-    return allPalettes[paletteIndex];
-}
+DEFINE_GRADIENT_PALETTE( aspectcolr_gp ) {
+    0, 255,255,255,
+    0, 255,255,  0,
+   63,   0,255,  0,
+  127,   0,255,255,
+  191, 255,  0,  0,
+  255, 255,255,  0};
 
-void randomizePalette(){
-  paletteIndex = random(numPalettes);
-}
-
-void init_palettes(){
-    randomizePalette();
-}
 
 #endif

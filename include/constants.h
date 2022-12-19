@@ -1,7 +1,7 @@
 #ifndef Constants_h
 #define Constants_h
 
-char VERSIONSTRING[] =  "OBELISK v0.4a";
+char VERSIONSTRING[] =  "OBELISK v0.5a";
 
 #define PATTERN_SWAP 60*10
 #define UPDATES_PER_SECOND 30
