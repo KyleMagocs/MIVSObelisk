@@ -54,6 +54,21 @@ void FillEachCube( uint8_t colorIndex)
   }
 }
 
+void CycleCubes( uint8_t colorIndex)
+{
+  updatePattern("cubecycle");
+  for(int i = 0; i < 4; i++){  // each box
+    for(int j = 0; j < LEDS_PER_STRIP; j++)  // each LED in the box
+    {
+      leds1[i*LEDS_PER_STRIP + j] = ColorFromPalette( getCurrentPalette(), colorIndex+i*64, BRIGHTNESS, currentBlending);
+      leds2[i*LEDS_PER_STRIP + j] = ColorFromPalette( getCurrentPalette(), colorIndex+i*64, BRIGHTNESS, currentBlending);
+      leds3[i*LEDS_PER_STRIP + j] = ColorFromPalette( getCurrentPalette(), colorIndex+i*64, BRIGHTNESS, currentBlending);
+      leds4[i*LEDS_PER_STRIP + j] = ColorFromPalette( getCurrentPalette(), colorIndex+i*64, BRIGHTNESS, currentBlending);
+      colorIndex+= 3;
+    }
+  }
+}
+
 void FillEachPillar( uint8_t colorIndex)
 {
     updatePattern("pillars");
@@ -76,6 +91,7 @@ PatternFunction allPatterns[] = {
     FillAllStripsCycle,
     FillAllStripsUniform,
     FillEachCube,
+    CycleCubes,
     FillEachPillar,
     pacifica_loop,
     FireNormal,

@@ -12,24 +12,6 @@ CRGB green = CHSV(HUE_GREEN, 255, 255);
 CRGB black = CRGB::Black;
 CRGB white = CRGB::White;
 
-CRGBPalette16 GreenAndPurple_p = CRGBPalette16(
-    green, green, green, green,
-    black, black, black, black,
-    purple, purple, purple, purple,
-    black, black, black, black);
-
-CRGBPalette16 Matrix_p = CRGBPalette16(
-    green, green, black, black,
-    white, black, black, green,
-    black, green, black, white,
-    black, green, black, green);
-
-CRGBPalette16 WhiteStripes_p = CRGBPalette16(
-    white, white, white, white,
-    black, black, black, black,
-    white, white, white, white,
-    black, black, black, black);
-  
 // Gradient palette "bhw1_15_gp", originally from
 // http://soliton.vm.bytemark.co.uk/pub/cpt-city/bhw/bhw1/tn/bhw1_15.png.index.html
 // converted for FastLED with gammas (2.6, 2.2, 2.5)
@@ -156,10 +138,8 @@ CRGBPalette16 allPalettes[] = {
     bhw2_50_gp,
     GMT_seis_gp,
     ramp_gp,
-    GreenAndPurple_p,
     cool_gp,
     yarg_gp,
-    Matrix_p,
     // WhiteStripes_p // ack it just looks like ass because I'm not injecting better power
     winter_gp
 };

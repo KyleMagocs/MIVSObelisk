@@ -14,7 +14,7 @@
 // Default 120, suggested range 50-200.
 #define SPARKING 75
 CRGBPalette16 gPal = HeatColors_p;
-bool gReverseDirection = true;
+bool gReverseDirection = false;
 
 void Fire2012WithPalette_1()
 {
