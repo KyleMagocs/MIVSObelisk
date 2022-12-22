@@ -201,6 +201,7 @@ void Fire2012WithPalette_4()
 
 void FireNormal(uint8_t colorIndex){
     updatePattern("fire");
+    logPalette("-");  // palette is irrelvant here
 
     gPal = HeatColors_p;
     Fire2012WithPalette_1();
