@@ -115,7 +115,7 @@ void pacifica_deepen_colors()
 
 void pacifica_loop(uint8_t colorIndex)
 {
-  updatePattern("ocean");
+  updatePattern("OCEAN");
   logPalette("-");  // palette is irrelvant here
   // Increment the four "color index start" counters, one for each wave layer.
   // Each is incremented at a different speed, and the speeds vary over time.

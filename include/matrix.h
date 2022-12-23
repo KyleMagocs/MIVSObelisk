@@ -75,6 +75,7 @@ void DoMatrix() {
 
 
 void Matrix(int _nothing) {
+  updatePattern("MATRIX");
   DoMatrix();
 
   EVERY_N_MILLISECONDS(30) {

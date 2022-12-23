@@ -6,16 +6,10 @@
 #include "palette_objects.h"
 
 elapsedSeconds oledTimer;
-elapsedSeconds patternTimer = PATTERN_SWAP *  2; // start it high so we start with a refresh
+elapsedMillis patternTimer = PATTERN_SWAP *  2; // start it high so we start with a refresh
 elapsedSeconds uptime = 0;
 
-
-// #define LOGPALETTE(name) logPalette(#name)
-
-// void logPalette(char *name) {   // what holy hell is this
-//     u8x8.drawString(0, 7, name);
-// }
-
+static uint8_t startIndex = 0;
 
 void setup(){
     delay(1000);  // safety first!
@@ -26,10 +20,9 @@ void setup(){
     init_palettes();
     init_leds();
     
-    // playStartupPattern();
+    playStartupPattern();
+    clear_oled();
 }
-
-static uint8_t startIndex = 0;
 
 void tryPatternSwap(){
     float timer = patternTimer/(float)1000;
@@ -40,32 +33,31 @@ void tryPatternSwap(){
         reseedTheSeeded();
 
         patternTimer = 0;
-        writePattern = true;
     }
 }
 
+float brightness = 0.0;
 void tryCrossFade(){
     float timer = patternTimer/(float)1000;
     if(PATTERN_SWAP-timer < PATTERN_COOLDOWN || timer < PATTERN_COOLDOWN)  // fade out for the last ten seconds, fade in for the first 10 seconds
     {
-        Serial.print(patternTimer); Serial.print("   ");
-        Serial.print(timer); Serial.print("   ");
         float time_delta = min((float)timer, (float)(PATTERN_SWAP-timer));
-        Serial.print(time_delta); Serial.print("    ");
         float factor = abs(time_delta*(1.0/PATTERN_COOLDOWN));  //this should give you a range of 0-PATTERN_COOLDOWN
-        Serial.println(factor);
-        FastLED.setBrightness(BRIGHTNESS*factor);
+        brightness=BRIGHTNESS*factor;
+        FastLED.setBrightness(brightness);
     }
 }
 
-void tryDrawOled(){
-    float timer = patternTimer/(float)1000;
+void drawOled(){
+    draw_base();
+    logPalette(getCurrentPaletteName());
+    drawTimers(PATTERN_SWAP-patternTimer/1000, uptime);  // and update the oled  
+}
+
+void tryShowOled(){
     if (oledTimer > OLED_DRAW)
     {
         oledTimer = 0;
-        draw_base();
-        logPalette(getCurrentPaletteName());
-        drawTimers((int)(PATTERN_SWAP - timer), uptime);  // and update the oled  
         show_oled();  
     }
 }
@@ -74,12 +66,15 @@ void loop()
 {
     tryPatternSwap();
     tryCrossFade();
-    tryDrawOled();
+    drawOled();
 
     allPatterns[patternIndex](startIndex);
     
     FastLED.show();
     FastLED.delay(1000 / UPDATES_PER_SECOND);
-   
+    
     startIndex++; /* motion speed */ 
+
+    tryShowOled();
+
 }

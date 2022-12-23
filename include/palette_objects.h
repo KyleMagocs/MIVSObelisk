@@ -11,16 +11,16 @@ struct obeliskPalette {
 };
 
 
-obeliskPalette blues = {"blues", bhw1_15_gp};
-obeliskPalette blueyellow = {"blueyellow", bhw1_15_gp};
-obeliskPalette dark = {"dark", Dark2_06_gp};
-obeliskPalette seismic = {"Seismic", GMT_seis_gp};
-obeliskPalette ramp = {"rgb ramp", ramp_gp};
-obeliskPalette cool = {"bluepink", cool_gp};
-obeliskPalette hangonfatboy = {"fatboy", hangonfatboy_gp};
-obeliskPalette winter = {"winter", winter_gp};
-obeliskPalette ryb = {"ryb", ryb_gp};
-obeliskPalette aspect = {"aspect", aspectcolr_gp};
+obeliskPalette blues = {"BLUES", bhw1_15_gp};
+obeliskPalette blueyellow = {"BLUEYELLOW", bhw1_15_gp};
+obeliskPalette dark = {"DARK", Dark2_06_gp};
+obeliskPalette seismic = {"SEISMIC", GMT_seis_gp};
+obeliskPalette ramp = {"RGB RAMP", ramp_gp};
+obeliskPalette cool = {"BLUEPINK", cool_gp};
+obeliskPalette hangonfatboy = {"FATBOY", hangonfatboy_gp};
+obeliskPalette winter = {"WINTER", winter_gp};
+obeliskPalette ryb = {"RYB", ryb_gp};
+obeliskPalette aspect = {"ASPECT", aspectcolr_gp};
 
 obeliskPalette allPalettes[] = {
     blues,

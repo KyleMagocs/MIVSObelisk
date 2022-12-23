@@ -13,7 +13,7 @@ short patternIndex;
 
 void FillAllStripsUniform( uint8_t colorIndex)
 {
-    updatePattern("uniform");
+    updatePattern("UNIFORM");
 
     for( int i = 0; i < NUM_LEDS; i++) {
         leds1[i] = ColorFromPalette( getCurrentPalette(), colorIndex, BRIGHTNESS, currentBlending);
@@ -25,7 +25,7 @@ void FillAllStripsUniform( uint8_t colorIndex)
 
 void FillAllStripsCycle( uint8_t colorIndex)
 {
-    updatePattern("cycle");
+    updatePattern("CYCLE");
     for( int i = 0; i < NUM_LEDS; i++) {
         leds1[i] = ColorFromPalette( getCurrentPalette(), colorIndex, BRIGHTNESS, currentBlending);
         leds2[i] = ColorFromPalette( getCurrentPalette(), colorIndex, BRIGHTNESS, currentBlending);
@@ -37,7 +37,7 @@ void FillAllStripsCycle( uint8_t colorIndex)
 
 void FillEachCube( uint8_t colorIndex)
 {
-    updatePattern("cubes");
+    updatePattern("CUBES");
   for(int i = 0; i < 4; i++){  // each box
     for(int j = 0; j < LEDS_PER_STRIP; j++)  // each LED in the box
     {
@@ -51,7 +51,7 @@ void FillEachCube( uint8_t colorIndex)
 
 void CycleCubes( uint8_t colorIndex)
 {
-  updatePattern("cubecycle");
+  updatePattern("CUBECYCLE");
   for(int i = 0; i < 4; i++){  // each box
     for(int j = 0; j < LEDS_PER_STRIP; j++)  // each LED in the box
     {
@@ -66,7 +66,7 @@ void CycleCubes( uint8_t colorIndex)
 
 void FillEachPillar( uint8_t colorIndex)
 {
-    updatePattern("pillars");
+    updatePattern("PILLARS");
     for( int i = 0; i < NUM_LEDS; i++) {
         leds1[i] = ColorFromPalette( getCurrentPalette(), colorIndex, BRIGHTNESS, currentBlending);
     }
@@ -81,11 +81,17 @@ void FillEachPillar( uint8_t colorIndex)
     }
 }
 
+void playStartupPattern(){
+    // delay(3000);  // TODO:  THIS
+}
+
 // there are several patterns that are seeded before they play, and it's kinda ugly if they start mid-stream
 void reseedTheSeeded(){
     init_matrix();
     init_fire();
 }
+
+
 
 typedef void (*PatternFunction)(uint8_t index);
 PatternFunction allPatterns[] = {
