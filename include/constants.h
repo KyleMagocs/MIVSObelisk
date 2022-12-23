@@ -6,7 +6,7 @@
 
 String VERSIONSTRING =  "OBELISK v1.0b";
 
-#define PATTERN_SWAP 60*1  // 60s x 30m
+#define PATTERN_SWAP 60*30  // 60s x 30m
 #define UPDATES_PER_SECOND 30
 #define FPS 15
 
