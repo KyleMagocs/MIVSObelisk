@@ -31,33 +31,55 @@ void setup(){
 
 static uint8_t startIndex = 0;
 
-void loop()
-{
-    if (patternTimer > PATTERN_SWAP)  // SHUFFLE TIME
+void tryPatternSwap(){
+    float timer = patternTimer/(float)1000;
+    if (timer > PATTERN_SWAP)  // SHUFFLE TIME
     {
         randomizePalette();
         randomizePattern();
+        reseedTheSeeded();
+
         patternTimer = 0;
         writePattern = true;
     }
+}
 
-    draw_base();
-    logPalette(getCurrentPaletteName());
-    drawTimers(PATTERN_SWAP - patternTimer, uptime);  // and update the oled  
+void tryCrossFade(){
+    float timer = patternTimer/(float)1000;
+    if(PATTERN_SWAP-timer < PATTERN_COOLDOWN || timer < PATTERN_COOLDOWN)  // fade out for the last ten seconds, fade in for the first 10 seconds
+    {
+        Serial.print(patternTimer); Serial.print("   ");
+        Serial.print(timer); Serial.print("   ");
+        float time_delta = min((float)timer, (float)(PATTERN_SWAP-timer));
+        Serial.print(time_delta); Serial.print("    ");
+        float factor = abs(time_delta*(1.0/PATTERN_COOLDOWN));  //this should give you a range of 0-PATTERN_COOLDOWN
+        Serial.println(factor);
+        FastLED.setBrightness(BRIGHTNESS*factor);
+    }
+}
 
-    allPatterns[patternIndex](startIndex);
-
-    FastLED.show();
-    
+void tryDrawOled(){
+    float timer = patternTimer/(float)1000;
     if (oledTimer > OLED_DRAW)
     {
-        show_oled();  
         oledTimer = 0;
+        draw_base();
+        logPalette(getCurrentPaletteName());
+        drawTimers((int)(PATTERN_SWAP - timer), uptime);  // and update the oled  
+        show_oled();  
     }
+}
 
+void loop()
+{
+    tryPatternSwap();
+    tryCrossFade();
+    tryDrawOled();
+
+    allPatterns[patternIndex](startIndex);
+    
+    FastLED.show();
     FastLED.delay(1000 / UPDATES_PER_SECOND);
    
-
-
     startIndex++; /* motion speed */ 
 }

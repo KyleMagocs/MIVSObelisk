@@ -9,7 +9,6 @@
 const int TOTALLEDS = NUM_LEDS*NUM_STRIPS;
 static byte rain[TOTALLEDS];
 int speed = 1;
-bool matrixInitialized = false;
 
 void changepattern () {
   int rand1 = random16 (TOTALLEDS);
@@ -21,12 +20,11 @@ void changepattern () {
   }
 } 
 
-void raininit() { 
-  FastLED.setBrightness(255);   
+void init_matrix() {  
   FastLED.clear();                           //init array of dots. run once
   for (int i = 0; i < TOTALLEDS; i++) {
     
-    if (random8(20) == 0) {
+    if (random8(8) == 0) {
       rain[i] = 1;  //random8(20) number of dots. decrease for more dots
     }
     else {
@@ -34,7 +32,6 @@ void raininit() {
       rain[i] = 0;
     }
   }
-  matrixInitialized=true;
 } //raininit
 
 void drawIt(int index) {
@@ -69,6 +66,7 @@ void DoMatrix() {
       
   }
   speed ++;
+  speed = speed % 32000;  // the example code I stole has an overflow issue so let's just caveman it
   fadeToBlackBy(leds1, NUM_LEDS, 40);
   fadeToBlackBy(leds2, NUM_LEDS, 40);
   fadeToBlackBy(leds3, NUM_LEDS, 40);
@@ -77,17 +75,12 @@ void DoMatrix() {
 
 
 void Matrix(int _nothing) {
-  if (!matrixInitialized){
-    raininit();
-  }
-
   DoMatrix();
 
   EVERY_N_MILLISECONDS(30) {
       changepattern();
   }
-  delay(100); // slow the pattern down
-
+  delay(75); // slow the pattern down
 }
 
 

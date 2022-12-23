@@ -16,6 +16,7 @@ char VERSIONSTRING[] =  "OBELISK v0.6a";
 const int NUM_LEDS = LEDS_PER_STRIP * NUM_CUBES;
 
 #define BRIGHTNESS 128
+#define PATTERN_COOLDOWN 3
 
 #define OLED_DRAW 1
 

@@ -12,24 +12,39 @@
 // SPARKING: What chance (out of 255) is there that a new spark will be lit?
 // Higher chance = more roaring fire.  Lower chance = more flickery fire.
 // Default 120, suggested range 50-200.
-#define SPARKING 75
+#define SPARKING 60
 CRGBPalette16 gPal = HeatColors_p;
-bool gReverseDirection = false;
+bool gReverseDirection = true;
+
+static byte heat1[NUM_LEDS];
+static byte heat2[NUM_LEDS];
+static byte heat3[NUM_LEDS];
+static byte heat4[NUM_LEDS];
+
+// reset the fire tracking
+void init_fire(){
+  for(int i = 0; i < NUM_LEDS; i++){
+    heat1[i] = 0;
+    heat2[i] = 0;
+    heat3[i] = 0;
+    heat4[i] = 0;
+  }
+}
 
 void Fire2012WithPalette_1()
 {
   // Array of temperature readings at each simulation cell
   random16_add_entropy(random());
-  static byte heat1[LEDS_PER_STRIP];
+  
 
   // Step 1.  Cool down every cell a little
-  for (int i = 0; i < LEDS_PER_STRIP; i++)
+  for (int i = 0; i < NUM_LEDS; i++)
   {
-    heat1[i] = qsub8(heat1[i], random8(0, ((COOLING * 10) / LEDS_PER_STRIP) + 2));
+    heat1[i] = qsub8(heat1[i], random8(0, ((COOLING * 10) / NUM_LEDS) + 2));
   }
 
   // Step 2.  Heat1 from each cell drifts 'up' and diffuses a little
-  for (int k = LEDS_PER_STRIP - 1; k >= 2; k--)
+  for (int k = NUM_LEDS - 1; k >= 2; k--)
   {
     heat1[k] = (heat1[k - 1] + heat1[k - 2] + heat1[k - 2]) / 3;
   }
@@ -42,7 +57,7 @@ void Fire2012WithPalette_1()
   }
 
   // Step 4.  Map from heat1 cells to LED colors
-  for (int j = 0; j < LEDS_PER_STRIP; j++)
+  for (int j = 0; j < NUM_LEDS; j++)
   {
     // Scale the heat1 value from 0-255 down to 0-240
     // for best results with color palettes.
@@ -51,7 +66,7 @@ void Fire2012WithPalette_1()
     int pixelnumber;
     if (gReverseDirection)
     {
-      pixelnumber = (LEDS_PER_STRIP - 1) - j;
+      pixelnumber = (NUM_LEDS - 1) - j;
     }
     else
     {
@@ -66,16 +81,16 @@ void Fire2012WithPalette_2()
   
   // Array of temperature readings at each simulation cell
   random16_add_entropy(random());
-  static byte heat2[LEDS_PER_STRIP];
+  
 
   // Step 1.  Cool down every cell a little
-  for (int i = 0; i < LEDS_PER_STRIP; i++)
+  for (int i = 0; i < NUM_LEDS; i++)
   {
-    heat2[i] = qsub8(heat2[i], random8(0, ((COOLING * 10) / LEDS_PER_STRIP) + 2));
+    heat2[i] = qsub8(heat2[i], random8(0, ((COOLING * 10) / NUM_LEDS) + 2));
   }
 
   // Step 2.  Heat2 from each cell drifts 'up' and diffuses a little
-  for (int k = LEDS_PER_STRIP - 1; k >= 2; k--)
+  for (int k = NUM_LEDS - 1; k >= 2; k--)
   {
     heat2[k] = (heat2[k - 1] + heat2[k - 2] + heat2[k - 2]) / 3;
   }
@@ -88,7 +103,7 @@ void Fire2012WithPalette_2()
   }
 
   // Step 4.  Map from heat2 cells to LED colors
-  for (int j = 0; j < LEDS_PER_STRIP; j++)
+  for (int j = 0; j < NUM_LEDS; j++)
   {
     // Scale the heat2 value from 0-255 down to 0-240
     // for best results with color palettes.
@@ -97,7 +112,7 @@ void Fire2012WithPalette_2()
     int pixelnumber;
     if (gReverseDirection)
     {
-      pixelnumber = (LEDS_PER_STRIP - 1) - j;
+      pixelnumber = (NUM_LEDS - 1) - j;
     }
     else
     {
@@ -109,19 +124,17 @@ void Fire2012WithPalette_2()
 
 void Fire2012WithPalette_3()
 {
-  
   // Array of temperature readings at each simulation cell
   random16_add_entropy(random());
-  static byte heat3[LEDS_PER_STRIP];
 
   // Step 1.  Cool down every cell a little
-  for (int i = 0; i < LEDS_PER_STRIP; i++)
+  for (int i = 0; i < NUM_LEDS; i++)
   {
-    heat3[i] = qsub8(heat3[i], random8(0, ((COOLING * 10) / LEDS_PER_STRIP) + 2));
+    heat3[i] = qsub8(heat3[i], random8(0, ((COOLING * 10) / NUM_LEDS) + 2));
   }
 
   // Step 2.  Heat3 from each cell drifts 'up' and diffuses a little
-  for (int k = LEDS_PER_STRIP - 1; k >= 2; k--)
+  for (int k = NUM_LEDS - 1; k >= 2; k--)
   {
     heat3[k] = (heat3[k - 1] + heat3[k - 2] + heat3[k - 2]) / 3;
   }
@@ -134,7 +147,7 @@ void Fire2012WithPalette_3()
   }
 
   // Step 4.  Map from heat3 cells to LED colors
-  for (int j = 0; j < LEDS_PER_STRIP; j++)
+  for (int j = 0; j < NUM_LEDS; j++)
   {
     // Scale the heat3 value from 0-255 down to 0-240
     // for best results with color palettes.
@@ -143,7 +156,7 @@ void Fire2012WithPalette_3()
     int pixelnumber;
     if (gReverseDirection)
     {
-      pixelnumber = (LEDS_PER_STRIP - 1) - j;
+      pixelnumber = (NUM_LEDS - 1) - j;
     }
     else
     {
@@ -155,19 +168,17 @@ void Fire2012WithPalette_3()
 
 void Fire2012WithPalette_4()
 {
-  
   // Array of temperature readings at each simulation cell
   random16_add_entropy(random());
-  static byte heat4[LEDS_PER_STRIP];
 
   // Step 1.  Cool down every cell a little
-  for (int i = 0; i < LEDS_PER_STRIP; i++)
+  for (int i = 0; i < NUM_LEDS; i++)
   {
-    heat4[i] = qsub8(heat4[i], random8(0, ((COOLING * 10) / LEDS_PER_STRIP) + 2));
+    heat4[i] = qsub8(heat4[i], random8(0, ((COOLING * 10) / NUM_LEDS) + 2));
   }
 
   // Step 2.  Heat4 from each cell drifts 'up' and diffuses a little
-  for (int k = LEDS_PER_STRIP - 1; k >= 2; k--)
+  for (int k = NUM_LEDS - 1; k >= 2; k--)
   {
     heat4[k] = (heat4[k - 1] + heat4[k - 2] + heat4[k - 2]) / 3;
   }
@@ -180,7 +191,7 @@ void Fire2012WithPalette_4()
   }
 
   // Step 4.  Map from heat4 cells to LED colors
-  for (int j = 0; j < LEDS_PER_STRIP; j++)
+  for (int j = 0; j < NUM_LEDS; j++)
   {
     // Scale the heat4 value from 0-255 down to 0-240
     // for best results with color palettes.
@@ -189,7 +200,7 @@ void Fire2012WithPalette_4()
     int pixelnumber;
     if (gReverseDirection)
     {
-      pixelnumber = (LEDS_PER_STRIP - 1) - j;
+      pixelnumber = (NUM_LEDS - 1) - j;
     }
     else
     {
@@ -201,7 +212,6 @@ void Fire2012WithPalette_4()
 
 void FireNormal(uint8_t colorIndex){
     updatePattern("fire");
-    logPalette("-");  // palette is irrelvant here
 
     gPal = HeatColors_p;
     Fire2012WithPalette_1();

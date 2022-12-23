@@ -5,6 +5,7 @@
 #include "constants.h"
 #include "fire.h"
 #include "ocean.h"
+#include "matrix.h"
 #include "oled.h"
 #include "strips.h"
 
@@ -78,6 +79,12 @@ void FillEachPillar( uint8_t colorIndex)
     for( int i = 0; i < NUM_LEDS; i++) {
         leds4[i] = ColorFromPalette( getCurrentPalette(), colorIndex+96, BRIGHTNESS, currentBlending);
     }
+}
+
+// there are several patterns that are seeded before they play, and it's kinda ugly if they start mid-stream
+void reseedTheSeeded(){
+    init_matrix();
+    init_fire();
 }
 
 typedef void (*PatternFunction)(uint8_t index);
