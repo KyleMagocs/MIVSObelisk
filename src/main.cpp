@@ -6,10 +6,16 @@
 #include "palette_objects.h"
 
 elapsedSeconds oledTimer;
-elapsedMillis patternTimer = PATTERN_SWAP *  2; // start it high so we start with a refresh
+elapsedMillis patternTimer = PATTERN_SWAP * 2; // start it high so we start with a refresh
 elapsedSeconds uptime = 0;
 
 static uint8_t startIndex = 0;
+
+void shuffle(){
+    randomizePalette();
+    randomizePattern();
+    reseedTheSeeded();
+}
 
 void setup(){
     delay(1000);  // safety first!
@@ -22,16 +28,14 @@ void setup(){
     
     playStartupPattern();
     clear_oled();
+    shuffle();
 }
 
 void tryPatternSwap(){
     float timer = patternTimer/(float)1000;
     if (timer > PATTERN_SWAP)  // SHUFFLE TIME
     {
-        randomizePalette();
-        randomizePattern();
-        reseedTheSeeded();
-
+        shuffle();
         patternTimer = 0;
     }
 }
@@ -69,7 +73,6 @@ void loop()
     drawOled();
 
     allPatterns[patternIndex](startIndex);
-    
     FastLED.show();
     FastLED.delay(1000 / UPDATES_PER_SECOND);
     

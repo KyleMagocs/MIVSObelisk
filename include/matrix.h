@@ -60,22 +60,24 @@ void DoMatrix() {
       // grab a random LED
       byte activepx = rain[((j + speed + random8(2) + TOTALLEDS) % TOTALLEDS)];   //fake scroll based on shift coordinate
       if (activepx) {  // if that LED is not off
-       int index = (TOTALLEDS - 1) - j; 
+      //  int index = (TOTALLEDS - 1) - j; 
+      int index = j; 
         drawIt(index);
       }
       
   }
   speed ++;
   speed = speed % 32000;  // the example code I stole has an overflow issue so let's just caveman it
-  fadeToBlackBy(leds1, NUM_LEDS, 40);
-  fadeToBlackBy(leds2, NUM_LEDS, 40);
-  fadeToBlackBy(leds3, NUM_LEDS, 40);
-  fadeToBlackBy(leds4, NUM_LEDS, 40);
+  fadeToBlackBy(leds1, NUM_LEDS, 50);
+  fadeToBlackBy(leds2, NUM_LEDS, 50);
+  fadeToBlackBy(leds3, NUM_LEDS, 50);
+  fadeToBlackBy(leds4, NUM_LEDS, 50);
 } //updaterain
 
 
-void Matrix(int _nothing) {
+void Matrix(uint8_t _nothing) {
   updatePattern("MATRIX");
+  logPalette("-");  // palette is irrelvant here
   DoMatrix();
 
   EVERY_N_MILLISECONDS(30) {

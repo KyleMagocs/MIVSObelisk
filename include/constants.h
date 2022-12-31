@@ -4,9 +4,9 @@
 
 // not really constants, is it?
 
-String VERSIONSTRING =  "OBELISK v1.0b";
+String VERSIONSTRING =  "OBELISK v1.01b";
 
-#define PATTERN_SWAP 60*30  // 60s x 30m
+#define PATTERN_SWAP 60*15  // 60s x 15m
 #define UPDATES_PER_SECOND 30
 #define FPS 15
 

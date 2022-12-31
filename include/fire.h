@@ -14,7 +14,7 @@
 // Default 120, suggested range 50-200.
 #define SPARKING 60
 CRGBPalette16 gPal = HeatColors_p;
-bool gReverseDirection = true;
+bool gReverseDirection = false;
 
 static byte heat1[NUM_LEDS];
 static byte heat2[NUM_LEDS];
@@ -62,7 +62,7 @@ void Fire2012WithPalette_1()
     // Scale the heat1 value from 0-255 down to 0-240
     // for best results with color palettes.
     byte colorindex = scale8(heat1[j], 240);
-    CRGB color = ColorFromPalette(gPal, colorindex);
+    CRGB color = ColorFromPalette(gPal, colorindex, BRIGHTNESS);
     int pixelnumber;
     if (gReverseDirection)
     {
@@ -108,7 +108,7 @@ void Fire2012WithPalette_2()
     // Scale the heat2 value from 0-255 down to 0-240
     // for best results with color palettes.
     byte colorindex = scale8(heat2[j], 240);
-    CRGB color = ColorFromPalette(gPal, colorindex);
+    CRGB color = ColorFromPalette(gPal, colorindex, BRIGHTNESS);
     int pixelnumber;
     if (gReverseDirection)
     {
@@ -152,7 +152,7 @@ void Fire2012WithPalette_3()
     // Scale the heat3 value from 0-255 down to 0-240
     // for best results with color palettes.
     byte colorindex = scale8(heat3[j], 240);
-    CRGB color = ColorFromPalette(gPal, colorindex);
+    CRGB color = ColorFromPalette(gPal, colorindex, BRIGHTNESS);
     int pixelnumber;
     if (gReverseDirection)
     {
@@ -196,7 +196,7 @@ void Fire2012WithPalette_4()
     // Scale the heat4 value from 0-255 down to 0-240
     // for best results with color palettes.
     byte colorindex = scale8(heat4[j], 240);
-    CRGB color = ColorFromPalette(gPal, colorindex);
+    CRGB color = ColorFromPalette(gPal, colorindex, BRIGHTNESS);
     int pixelnumber;
     if (gReverseDirection)
     {
@@ -212,6 +212,7 @@ void Fire2012WithPalette_4()
 
 void FireNormal(uint8_t colorIndex){
     updatePattern("FIRE");
+    logPalette("-");  // palette is irrelvant here
 
     gPal = HeatColors_p;
     Fire2012WithPalette_1();
@@ -222,6 +223,7 @@ void FireNormal(uint8_t colorIndex){
 void FireCool(uint8_t colorIndex)
 {
     updatePattern("BLUECANDLE");
+    logPalette("-");  // palette is irrelvant here
 
     // Second, this palette is like the heat colors, but blue/aqua instead of red/yellow
     gPal = CRGBPalette16(CRGB::Black, CRGB::Blue, CRGB::Aqua, CRGB::White);

@@ -13,13 +13,14 @@ void draw_base() {
     // Heltec.display->
     // Heltec.display->setInverseFont(1);
     Heltec.display->setColor(WHITE);  // DRAW BG
-    Heltec.display->fillRect(0,0,128,1);  // cute line
+    Heltec.display->fillRect(0,0,128,3);  // cute line
     Heltec.display->fillRect(0,2,128,9);  // version
     Heltec.display->fillRect(0,23,48,9);  // palette
     Heltec.display->fillRect(0,46,48,9);  // pattern
     Heltec.display->fillRect(100,23,48,9);  // next
     Heltec.display->fillRect(88,46,48,9);  // uptime
     Heltec.display->setColor(BLACK);  // DRAW TEXT
+    Heltec.display->fillRect(1,1,126,1);  // cute line
     Heltec.display->setTextAlignment(TEXT_ALIGN_LEFT);
     Heltec.display->drawString(0, 21, "PALETTE");
     Heltec.display->drawString(0, 44, "PATTERN");
@@ -36,6 +37,9 @@ void draw_base() {
 }
 
 void logPalette(String paletteName) { 
+    Heltec.display->setColor(BLACK);
+    Heltec.display->fillRect(0,32,64,9);
+    Heltec.display->setColor(WHITE);
     Heltec.display->setTextAlignment(TEXT_ALIGN_LEFT);
     Heltec.display->drawString(0, 30, paletteName);
 }
@@ -56,7 +60,6 @@ static void drawTimers(int timer, elapsedSeconds uptime)
     short min = timer / 60;
     short sec = timer % 60;
     sprintf(timestr, "%2dm %2ds", min, sec);
-    sprintf(timestr, "%6d", timer);
     Heltec.display->drawString(127, 30, timestr);
 
 
@@ -66,7 +69,7 @@ static void drawTimers(int timer, elapsedSeconds uptime)
     short hr = tempUptime / 60 / 60;
     min = (tempUptime  % 3600) / 60;
     sec = (tempUptime  % 3600) % 60;
-    sprintf(timestr2, "%3dh%2dm%2ds", hr, min,sec);
+    sprintf(timestr2, "%3dh%2dm", hr, min);
     
     Heltec.display->drawString(127, 54, timestr2);
 }
