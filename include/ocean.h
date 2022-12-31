@@ -48,7 +48,7 @@ void pacifica_one_layer(CRGBPalette16 &p, uint16_t cistart, uint16_t wavescale, 
   uint16_t ci = cistart;
   uint16_t waveangle = ioff;
   uint16_t wavescale_half = (wavescale / 2) + 20;
-  for (uint16_t i = 0; i < LEDS_PER_STRIP; i++)
+  for (uint16_t i = 0; i < NUM_LEDS; i++)
   {
     waveangle += 250;
     uint16_t s16 = sin16(waveangle) + 32768;
@@ -70,7 +70,7 @@ void pacifica_add_whitecaps()
   uint8_t basethreshold = beatsin8(9, 55, 65);
   uint8_t wave = beat8(7);
 
-  for (uint16_t i = 0; i < LEDS_PER_STRIP; i++)
+  for (uint16_t i = 0; i < NUM_LEDS; i++)
   {
     uint8_t threshold = scale8(sin8(wave), 20) + basethreshold;
     wave += 7;
@@ -90,7 +90,7 @@ void pacifica_add_whitecaps()
 // Deepen the blues and greens
 void pacifica_deepen_colors()
 {
-  for (uint16_t i = 0; i < LEDS_PER_STRIP; i++)
+  for (uint16_t i = 0; i < NUM_LEDS; i++)
   {
     // leds[i].blue = scale8( leds[i].blue,  145);
     // leds[i].green= scale8( leds[i].green, 200);
@@ -135,10 +135,10 @@ void pacifica_loop(uint8_t colorIndex)
   sCIStart4 -= (deltams2 * beatsin88(257, 4, 6));
 
   // Clear out the LED array to a dim background blue-green
-  fill_solid(leds1, LEDS_PER_STRIP, CRGB(2, 6, 10));
-    fill_solid(leds2, LEDS_PER_STRIP, CRGB(2, 6, 10));
-      fill_solid(leds3, LEDS_PER_STRIP, CRGB(2, 6, 10));
-        fill_solid(leds4, LEDS_PER_STRIP, CRGB(2, 6, 10));
+  fill_solid(leds1, NUM_LEDS, CRGB(2, 6, 10));
+    fill_solid(leds2, NUM_LEDS, CRGB(2, 6, 10));
+      fill_solid(leds3, NUM_LEDS, CRGB(2, 6, 10));
+        fill_solid(leds4, NUM_LEDS, CRGB(2, 6, 10));
 
   // Render each of four layers, with different scales and speeds, that vary over time
   pacifica_one_layer(pacifica_palette_1, sCIStart1, beatsin16(3, 11 * 256, 14 * 256), beatsin8(10, 70, 130), 0 - beat16(301));
